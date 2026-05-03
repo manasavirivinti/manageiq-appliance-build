@@ -95,7 +95,11 @@ drivers="mptspi vmw_pvscsi"
 drivers="mptbase mptscsih mptspi"
 <% end %>
 dracut --force --add-drivers "$drivers" $ramfsfile $kversion
+# Ensure zipl bootloader is configured (s390x specific)
+zipl
 
+# Verify kernel installation
+rpm -qa | grep kernel
 <%= render_partial "post/azure" if @target == "azure" %>
 <%= render_partial "post/ec2" if @target == "ec2" %>
 <%= render_partial "post/gce" if @target == "gce" %>
